@@ -1,0 +1,4 @@
+node_modules/
+.expo/
+.env
+npm-debug.*
