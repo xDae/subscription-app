@@ -66,7 +66,7 @@ class Home extends React.Component {
               }}>
               <Text
                 style={{
-                  // fontFamily: 'montserrat-regular',
+                  fontFamily: 'montserrat-regular',
                   backgroundColor: 'transparent',
                   fontSize: 15,
                   color: '#fff',
