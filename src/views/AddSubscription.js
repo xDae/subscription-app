@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import { Text, View, Image, TextInput, Picker, Button, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';

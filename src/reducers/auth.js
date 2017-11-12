@@ -1,3 +1,5 @@
+// @flow
+
 const initialAuthState = { isLoggedIn: false };
 
 const auth = (state = initialAuthState, action) => {

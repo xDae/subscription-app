@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
-
 import { firestore } from '../../firebase-config';
 
 const styles = StyleSheet.create({
@@ -24,7 +23,6 @@ class NoSubscriptions extends Component {
       const category = doc.data().category;
 
       category.get().then(doc => console.log(doc.data().name));
-
     });
   };
 

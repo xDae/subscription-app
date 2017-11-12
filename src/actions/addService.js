@@ -1,3 +1,5 @@
+// @flow
+
 export const addService = (id, service) => ({
   type: 'ADD_SERVICE',
   id,

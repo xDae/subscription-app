@@ -1,15 +1,15 @@
-// flow
+// @flow
 
-import React from 'react';
+import React, { Component } from 'react';
 import { View, StyleSheet, FlatList, Text, TouchableHighlight } from 'react-native';
 import { LinearGradient } from 'expo';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 import { connect } from 'react-redux';
-// import { Font } from 'expo';
 
 // Views
 import NoSubscriptions from './NoSubscriptions';
+import ServiceCard from '../components/ServiceCard';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class Home extends React.Component {
+class Home extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerRight: (
       <TouchableHighlight
@@ -32,21 +32,33 @@ class Home extends React.Component {
     ),
   });
 
-  facebookLogin = () => this.loginWithFacebook();
+  // facebookLogin = () => this.loginWithFacebook();
 
   render() {
     const { navigate } = this.props.navigation;
-    // return <View style={styles.container}>{this.state.fontLoaded && <NoSubscriptions />}</View>;
+
     return (
       <View style={styles.container}>
         {Object.keys(this.props.serviceList).length ? (
           <FlatList
-            style={{ width: '100%' }}
+            contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 12 }}
+            style={{
+              width: '100%',
+            }}
             data={Object.keys(this.props.serviceList)}
             keyExtractor={item => item}
             renderItem={({ item }) => (
-              <TouchableHighlight onPress={() => navigate('ServiceDetail', { serviceID: item })}>
-                <Text>{this.props.serviceList[item].serviceName}</Text>
+              <TouchableHighlight
+                underlayColor="transparent"
+                onPress={() => navigate('ServiceDetail', { serviceID: item })}>
+                <View style={{ marginTop: 10 }}>
+                  <ServiceCard
+                    // logo={}
+                    text={this.props.serviceList[item].serviceName}
+                    price="34$"
+                    priceType="monthly"
+                  />
+                </View>
               </TouchableHighlight>
             )}
           />

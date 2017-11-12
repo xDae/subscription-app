@@ -1,4 +1,4 @@
-// flow
+// @flow
 
 import React, { Component } from 'react';
 import { Modal, Text, View, StyleSheet, FlatList, Image, TouchableHighlight } from 'react-native';
@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
   list: {
     width: '100%',
     flex: 1,
-    marginTop: 10,
   },
   columnWrapper: {
     flex: 1,
@@ -171,8 +170,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   serviceCard: {
-    // minWidth: 100,
-    // maxWidth: 120,
     width: 110,
     height: 100,
     alignItems: 'center',
@@ -186,7 +183,7 @@ const styles = StyleSheet.create({
   },
   cardText: {
     color: rgba('#666', 0.7),
-    // fontFamily: 'montserrat-light',
+    fontFamily: 'montserrat-light',
     fontSize: 12,
     textAlign: 'center',
   },
@@ -228,6 +225,7 @@ export default class ServiceList extends Component {
     return (
       <View style={styles.container}>
         <FlatList
+          contentContainerStyle={{ paddingTop: 10 }}
           style={styles.list}
           data={serviceList}
           keyExtractor={item => item.id}
@@ -270,7 +268,7 @@ export default class ServiceList extends Component {
               <SimpleLineIcons name="wallet" size={20} color="#fff" />
               <Text
                 style={{
-                  // fontFamily: 'montserrat-regular',
+                  fontFamily: 'montserrat-regular',
                   backgroundColor: 'transparent',
                   fontSize: 15,
                   color: '#fff',

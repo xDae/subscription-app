@@ -1,3 +1,5 @@
+// @flow
+
 import omit from 'lodash/omit';
 
 const serviceList = (state = {}, { type, id, payload }) => {

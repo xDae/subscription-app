@@ -1,3 +1,5 @@
+// @flow
+
 import {
   API_KEY,
   AUTH_DOMAIN,
