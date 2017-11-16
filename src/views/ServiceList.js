@@ -250,7 +250,9 @@ export default class ServiceList extends Component {
             </TouchableHighlight>
           )}
         />
-        <TouchableHighlight onPress={() => navigate('AddSubscription', { service: 'Custom' })}>
+        <TouchableHighlight
+          underlayColor="transparent"
+          onPress={() => navigate('AddSubscription', { service: 'Custom' })}>
           <View>
             <LinearGradient
               colors={['#FF6A00', '#EE0979']}
@@ -289,9 +291,24 @@ export default class ServiceList extends Component {
             alert('Modal has been closed.');
           }}>
           <View style={{ marginTop: 22 }}>
+            <FlatList
+              contentContainerStyle={{ paddingTop: 10 }}
+              // style={styles.list}
+              data={['Media', 'Finance', 'other', 'dasd', 'dadasddad', 'dadsasdamsd']}
+              keyExtractor={item => item}
+              renderItem={({ item }) => (
+                <TouchableHighlight
+                  onPress={() => {
+                    this.toggleModalVisible(!this.state.modalVisible);
+                  }}
+                  underlayColor="transparent">
+                  <View>
+                    <Text>{item}</Text>
+                  </View>
+                </TouchableHighlight>
+              )}
+            />
             <View>
-              <Text>Hello World!</Text>
-
               <TouchableHighlight
                 onPress={() => {
                   this.toggleModalVisible(!this.state.modalVisible);

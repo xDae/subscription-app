@@ -1,22 +1,24 @@
 // @flow
 
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, View, Image, StyleSheet } from 'react-native';
 
 import { rgba } from 'polished';
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     flexDirection: 'row',
     borderRadius: 4,
     borderWidth: 1,
     borderColor: rgba('#b2b2b2', 0.2),
-
     alignItems: 'center',
-
     paddingHorizontal: 10,
-    paddingVertical: 10,
+    paddingVertical: 16,
+  },
+  logo: {
+    width: 30,
+    height: 30,
+    marginRight: 10,
   },
   priceContainer: {
     marginLeft: 'auto',
@@ -41,25 +43,21 @@ const styles = StyleSheet.create({
   },
 });
 
-class ServiceCard extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Image
-          style={{ width: 30, height: 30 }}
-          resizeMode="contain"
-          source={{
-            uri: this.props.logo,
-          }}
-        />
-        <Text style={styles.serviceTitle}>{this.props.text}</Text>
-        <View style={styles.priceContainer}>
-          <Text style={styles.price}>{this.props.price}</Text>
-          <Text style={styles.priceType}>{this.props.priceType}</Text>
-        </View>
-      </View>
-    );
-  }
-}
+const ServiceCard = ({ logoUrl, text, price, priceType }) => (
+  <View style={styles.container}>
+    <Image
+      style={styles.logo}
+      resizeMode="contain"
+      source={{
+        uri: logoUrl,
+      }}
+    />
+    <Text style={styles.serviceTitle}>{text}</Text>
+    <View style={styles.priceContainer}>
+      <Text style={styles.price}>{price}</Text>
+      <Text style={styles.priceType}>{priceType}</Text>
+    </View>
+  </View>
+);
 
 export default ServiceCard;
