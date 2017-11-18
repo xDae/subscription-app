@@ -233,7 +233,7 @@ export default class ServiceList extends Component {
           columnWrapperStyle={styles.columnWrapper}
           renderItem={({ item }) => (
             <TouchableHighlight
-              onPress={() => navigate('AddSubscription', { service: item.name })}
+              onPress={() => navigate('AddSubscription', { serviceName: item.name })}
               underlayColor="transparent">
               <View style={styles.serviceCard}>
                 <Image
@@ -250,6 +250,7 @@ export default class ServiceList extends Component {
             </TouchableHighlight>
           )}
         />
+
         <TouchableHighlight
           underlayColor="transparent"
           onPress={() => navigate('AddSubscription', { service: 'Custom' })}>
@@ -284,13 +285,13 @@ export default class ServiceList extends Component {
         </TouchableHighlight>
 
         <Modal
-          animationType="slide"
+          animationType="fade"
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => {
             alert('Modal has been closed.');
           }}>
-          <View style={{ marginTop: 22 }}>
+          <View style={{ marginTop: 22, backgroundColor: rgba('red', 0.1), flex: 1 }}>
             <FlatList
               contentContainerStyle={{ paddingTop: 10 }}
               // style={styles.list}
@@ -298,9 +299,9 @@ export default class ServiceList extends Component {
               keyExtractor={item => item}
               renderItem={({ item }) => (
                 <TouchableHighlight
-                  onPress={() => {
-                    this.toggleModalVisible(!this.state.modalVisible);
-                  }}
+                  // onPress={() => {
+                  //   this.toggleModalVisible(!this.state.modalVisible);
+                  // }}
                   underlayColor="transparent">
                   <View>
                     <Text>{item}</Text>
