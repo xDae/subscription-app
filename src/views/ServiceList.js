@@ -2,9 +2,12 @@
 
 import React, { Component } from 'react';
 import { Modal, Text, View, StyleSheet, FlatList, Image, TouchableHighlight } from 'react-native';
-import { LinearGradient } from 'expo';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { rgba } from 'polished';
+
+// UI Components
+import GradientButton from '../components/GradientButton';
+import ServiceBox from '../components/ServiceBox';
 
 const serviceList = [
   {
@@ -169,24 +172,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingBottom: 10,
   },
-  serviceCard: {
-    width: 110,
-    height: 100,
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    borderColor: rgba('#979797', 0.1),
-    paddingHorizontal: 10,
-    paddingVertical: 14,
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderRadius: 4,
-  },
-  cardText: {
-    color: rgba('#666', 0.7),
-    fontFamily: 'montserrat-light',
-    fontSize: 12,
-    textAlign: 'center',
-  },
 });
 
 export default class ServiceList extends Component {
@@ -235,17 +220,8 @@ export default class ServiceList extends Component {
             <TouchableHighlight
               onPress={() => navigate('AddSubscription', { serviceName: item.name })}
               underlayColor="transparent">
-              <View style={styles.serviceCard}>
-                <Image
-                  style={{ width: 80, height: 30 }}
-                  resizeMode="contain"
-                  source={{
-                    uri: item.logo,
-                  }}
-                />
-                <Text numberOfLines={2} style={styles.cardText}>
-                  {item.name}
-                </Text>
+              <View>
+                <ServiceBox name={item.name} logo={item.logo} />
               </View>
             </TouchableHighlight>
           )}
@@ -255,32 +231,10 @@ export default class ServiceList extends Component {
           underlayColor="transparent"
           onPress={() => navigate('AddSubscription', { service: 'Custom' })}>
           <View>
-            <LinearGradient
-              colors={['#FF6A00', '#EE0979']}
-              start={{ x: 1, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              style={{
-                padding: 15,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignContent: 'center',
-                alignItems: 'center',
-                borderRadius: 2,
-                width: '100%',
-              }}>
-              <SimpleLineIcons name="wallet" size={20} color="#fff" />
-              <Text
-                style={{
-                  fontFamily: 'montserrat-regular',
-                  backgroundColor: 'transparent',
-                  fontSize: 15,
-                  color: '#fff',
-                  textAlign: 'center',
-                  marginLeft: 6,
-                }}>
-                Add Custom Subscription
-              </Text>
-            </LinearGradient>
+            <GradientButton
+              text="Add Custom Subscription"
+              icon={<SimpleLineIcons name="wallet" size={20} color="#fff" />}
+            />
           </View>
         </TouchableHighlight>
 

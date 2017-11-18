@@ -12,7 +12,7 @@ import {
   TouchableHighlight,
   StyleSheet,
 } from 'react-native';
-import { LinearGradient } from 'expo';
+
 import { NavigationActions } from 'react-navigation';
 // import { SimpleLineIcons } from '@expo/vector-icons';
 import { rgba } from 'polished';
@@ -24,6 +24,7 @@ import getSymbolFromCurrency from 'currency-symbol-map';
 import { connect } from 'react-redux';
 
 import { addService } from '../actions/addService';
+import GradientButton from '../components/GradientButton';
 
 const styles = StyleSheet.create({
   container: {
@@ -51,12 +52,18 @@ const styles = StyleSheet.create({
     fontFamily: 'montserrat-light',
     fontSize: 24,
   },
+  subscriptionType: {
+    fontFamily: 'montserrat-light',
+    fontSize: 12,
+    color: rgba('#979797', 0.6),
+  },
   servicePriceContainer: {
     justifyContent: 'center',
     flexDirection: 'row',
     width: 160,
     padding: 10,
     borderBottomWidth: 1,
+    marginBottom: 4,
     borderBottomColor: rgba('#979797', 0.3),
   },
   inputStyle: {
@@ -73,6 +80,7 @@ const styles = StyleSheet.create({
   },
   currencyPickerInput: {
     paddingHorizontal: 10,
+    paddingVertical: 0,
     borderWidth: 1,
     borderColor: rgba('#979797', 0.2),
     borderRadius: 2,
@@ -97,6 +105,7 @@ export class AddSubscription extends Component {
     price: 0,
     description: null,
     currencyCode: 'EUR',
+    subscriptionType: 'monthly',
   };
 
   handleAddServiceButtonClick = () => {
@@ -137,6 +146,7 @@ export class AddSubscription extends Component {
                 {getSymbolFromCurrency(this.state.currencyCode)}
               </Text>
             </View>
+            <Text style={styles.subscriptionType}>{this.state.subscriptionType}</Text>
           </View>
 
           <TextInput
@@ -155,9 +165,20 @@ export class AddSubscription extends Component {
 
           <View style={styles.currencyPickerInput}>
             <Picker
+              itemStyle={{ height: 90, color: rgba('#000', 0.6) }}
+              selectedValue={this.state.subscriptionType}
+              onValueChange={type => this.setState({ subscriptionType: type })}>
+              <Picker.Item label="Weekly" value="weekly" />
+              <Picker.Item label="Monthly" value="monthly" />
+              <Picker.Item label="Yearly" value="yearly" />
+            </Picker>
+          </View>
+
+          <View style={styles.currencyPickerInput}>
+            <Picker
+              itemStyle={{ height: 100, color: rgba('#000', 0.6) }}
               selectedValue={this.state.currencyCode}
-              onValueChange={currencyCode => this.setState({ currencyCode })}
-              itemStyle={{ height: 100 }}>
+              onValueChange={currencyCode => this.setState({ currencyCode })}>
               {cc
                 .codes()
                 .map(currencyCode => (
@@ -183,31 +204,7 @@ export class AddSubscription extends Component {
 
         <TouchableHighlight underlayColor="transparent" onPress={this.handleAddServiceButtonClick}>
           <View>
-            <LinearGradient
-              colors={['#ff6a00', '#ee0979']}
-              start={{ x: 1, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              style={{
-                padding: 15,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignContent: 'center',
-                alignItems: 'center',
-                borderRadius: 2,
-                width: '100%',
-              }}>
-              <Text
-                style={{
-                  fontFamily: 'montserrat-regular',
-                  backgroundColor: 'transparent',
-                  fontSize: 15,
-                  color: '#fff',
-                  textAlign: 'center',
-                  marginLeft: 6,
-                }}>
-                Add Subscription
-              </Text>
-            </LinearGradient>
+            <GradientButton text="Add Subscription" />
           </View>
         </TouchableHighlight>
       </View>

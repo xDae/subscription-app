@@ -2,7 +2,6 @@
 
 import React, { Component } from 'react';
 import { View, StyleSheet, FlatList, Text, TouchableHighlight } from 'react-native';
-import { LinearGradient } from 'expo';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 import { connect } from 'react-redux';
@@ -11,13 +10,14 @@ import { connect } from 'react-redux';
 import NoSubscriptions from './NoSubscriptions';
 import ServiceCard from '../components/ServiceCard';
 
+// UI Components
+import GradientButton from '../components/GradientButton';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
     width: '100%',
+    backgroundColor: '#fff',
   },
 });
 
@@ -64,26 +64,8 @@ class Home extends Component {
           <NoSubscriptions />
         )}
         <TouchableHighlight onPress={() => navigate('ServiceList')}>
-          <View style={{ flexDirection: 'row', width: '100%' }}>
-            <LinearGradient
-              colors={['#FF6A00', '#EE0979']}
-              start={{ x: 1, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              style={{
-                padding: 15,
-                alignItems: 'center',
-                width: '100%',
-              }}>
-              <Text
-                style={{
-                  fontFamily: 'montserrat-regular',
-                  backgroundColor: 'transparent',
-                  fontSize: 15,
-                  color: '#fff',
-                }}>
-                Add New Subscription
-              </Text>
-            </LinearGradient>
+          <View>
+            <GradientButton text="Add New Subscription" />
           </View>
         </TouchableHighlight>
       </View>

@@ -1,13 +1,21 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Text, View, Button, TouchableHighlight } from 'react-native';
+import { Text, View, Button, TouchableHighlight, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 // redux actions
 import { removeService } from '../actions/addService';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: '100%',
+    backgroundColor: '#fff',
+  },
+});
 
 export class ServiceDetail extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -32,7 +40,7 @@ export class ServiceDetail extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Text> {this.props.navigation.state.params.serviceID} </Text>
         <Button onPress={this.removeItem} title="remove" />
       </View>
@@ -40,9 +48,11 @@ export class ServiceDetail extends Component {
   }
 }
 
-const mapStateToProps = ({ serviceList }) => {
+const mapStateToProps = ({ serviceList }, ownProps) => {
+  const { serviceID } = ownProps.navigation.state.params;
+
   return {
-    serviceList,
+    serviceData: { id: serviceID, ...serviceList[serviceID] },
   };
 };
 
