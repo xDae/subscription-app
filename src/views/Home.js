@@ -27,7 +27,7 @@ class Home extends Component {
       <TouchableHighlight
         onPress={() => navigation.navigate('Settings')}
         underlayColor="transparent">
-        <SimpleLineIcons name="settings" size={20} />
+        <SimpleLineIcons name="settings" size={20} color="#666" />
       </TouchableHighlight>
     ),
   });

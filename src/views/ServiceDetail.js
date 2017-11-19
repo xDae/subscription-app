@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Text, View, Button, TouchableHighlight, StyleSheet } from 'react-native';
+import { Text, View, Button, TouchableHighlight, StyleSheet, Image } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
@@ -22,7 +22,6 @@ export class ServiceDetail extends Component {
     title: navigation.state.params.serviceID,
     headerRight: (
       <TouchableHighlight onPress={() => navigation.navigate('Home')} underlayColor="transparent">
-        {/* <Text>Edit</Text> */}
         <SimpleLineIcons name="tag" size={20} />
       </TouchableHighlight>
     ),
@@ -41,7 +40,16 @@ export class ServiceDetail extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text> {this.props.navigation.state.params.serviceID} </Text>
+        <Image
+          style={styles.serviceLogo}
+          resizeMode="contain"
+          source={{
+            uri:
+              'https://cdn.dribbble.com/assets/dribbble-ball-1000-187399483de9611d2499b0cf6e49be99ed5d1e920c5790e9d930d134bae0c62e.png',
+          }}
+        />
+
+        <Text>{this.props.navigation.state.params.serviceID}</Text>
         <Button onPress={this.removeItem} title="remove" />
       </View>
     );
@@ -56,12 +64,8 @@ const mapStateToProps = ({ serviceList }, ownProps) => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    removeService: id => {
-      dispatch(removeService(id));
-    },
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  removeService: id => dispatch(removeService(id)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ServiceDetail);

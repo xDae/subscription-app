@@ -7,10 +7,10 @@ import {
   ScrollView,
   Image,
   TextInput,
-  Picker,
   Button,
   TouchableHighlight,
   StyleSheet,
+  Modal,
 } from 'react-native';
 
 import { NavigationActions } from 'react-navigation';
@@ -24,7 +24,10 @@ import getSymbolFromCurrency from 'currency-symbol-map';
 import { connect } from 'react-redux';
 
 import { addService } from '../actions/addService';
+
+// UI Components
 import GradientButton from '../components/GradientButton';
+import LanguagePicker from '../components/LanguagePicker';
 
 const styles = StyleSheet.create({
   container: {
@@ -101,12 +104,15 @@ export class AddSubscription extends Component {
   });
 
   state = {
+    isCurrencyModalOpen: false,
     name: null,
     price: 0,
     description: null,
     currencyCode: 'EUR',
     subscriptionType: 'monthly',
   };
+
+  handleToggleCurrenyModal = isVisible => this.setState({ isCurrencyModalOpen: isVisible });
 
   handleAddServiceButtonClick = () => {
     const serviceData = {
@@ -159,12 +165,26 @@ export class AddSubscription extends Component {
           <TextInput
             style={styles.inputStyle}
             keyboardType="numeric"
+            placeholder="Price"
+            onChangeText={price => this.setState({ price })}
+          />
+
+          <TouchableHighlight
+            underlayColor="transparent"
+            onPress={() => this.handleToggleCurrenyModal(!this.state.isCurrencyModalOpen)}>
+            <Text style={styles.inputStyle}>{cc.code(this.state.currencyCode).currency}</Text>
+          </TouchableHighlight>
+
+          <TextInput
+            style={styles.inputStyle}
+            defaultValue="monthly"
             placeholder="Price!"
             onChangeText={price => this.setState({ price })}
           />
 
+          {/*
           <View style={styles.currencyPickerInput}>
-            <Picker
+              <Picker
               itemStyle={{ height: 90, color: rgba('#000', 0.6) }}
               selectedValue={this.state.subscriptionType}
               onValueChange={type => this.setState({ subscriptionType: type })}>
@@ -172,24 +192,8 @@ export class AddSubscription extends Component {
               <Picker.Item label="Monthly" value="monthly" />
               <Picker.Item label="Yearly" value="yearly" />
             </Picker>
-          </View>
-
-          <View style={styles.currencyPickerInput}>
-            <Picker
-              itemStyle={{ height: 100, color: rgba('#000', 0.6) }}
-              selectedValue={this.state.currencyCode}
-              onValueChange={currencyCode => this.setState({ currencyCode })}>
-              {cc
-                .codes()
-                .map(currencyCode => (
-                  <Picker.Item
-                    key={currencyCode}
-                    label={cc.code(currencyCode).currency}
-                    value={currencyCode}
-                  />
-                ))}
-            </Picker>
-          </View>
+            </View>
+          */}
 
           <TextInput
             style={styles.inputStyle}
@@ -207,6 +211,52 @@ export class AddSubscription extends Component {
             <GradientButton text="Add Subscription" />
           </View>
         </TouchableHighlight>
+
+        <Modal
+          animationType="slide"
+          transparent
+          visible={this.state.isCurrencyModalOpen}
+          onRequestClose={() => this.handleToggleCurrenyModal(!this.state.isCurrencyModalOpen)}>
+          <TouchableHighlight
+            style={{ flex: 1 }}
+            underlayColor="transparent"
+            onPress={() => {
+              this.handleToggleCurrenyModal(!this.state.isCurrencyModalOpen);
+            }}>
+            <View
+              style={{
+                marginTop: 22,
+                flex: 1,
+                backgroundColor: rgba('#000', 0.6),
+                justifyContent: 'flex-end',
+                padding: 10,
+              }}>
+              <View
+                style={{
+                  backgroundColor: '#fff',
+                  paddingHorizontal: 10,
+                  borderRadius: 2,
+                  marginBottom: 10,
+                }}>
+                <LanguagePicker
+                  selectedValue={this.state.currencyCode}
+                  onValueChange={currencyCode => this.setState({ currencyCode })}
+                />
+              </View>
+              <View>
+                <TouchableHighlight
+                  underlayColor="transparent"
+                  onPress={() => {
+                    this.handleToggleCurrenyModal(!this.state.isCurrencyModalOpen);
+                  }}>
+                  <View>
+                    <GradientButton text="Select and Close" />
+                  </View>
+                </TouchableHighlight>
+              </View>
+            </View>
+          </TouchableHighlight>
+        </Modal>
       </View>
     );
   }

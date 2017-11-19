@@ -18,6 +18,7 @@ export const AppNavigator = StackNavigator({
     screen: Home,
     navigationOptions: {
       headerTitle: 'My Subscriptions',
+      headerTintColor: '#666',
       headerStyle,
     },
   },
@@ -33,17 +34,19 @@ export const AppNavigator = StackNavigator({
     navigationOptions: {
       title: 'Add new subscription',
       // headerRight: <SimpleLineIcons name="equalizer" size={20} />,
-      headerBackTitle: null,
+      // headerBackTitle: null,
+      headerTintColor: '#666',
       headerStyle,
-      headerBackTitleStyle: {
-        color: '#666666',
-      },
-      headerTintColor: '#666666',
+      // headerBackTitleStyle: {
+      //   color: '#666',
+      // },
     },
   },
   AddSubscription: {
     screen: AddSubscription,
+
     navigationOptions: {
+      headerTintColor: '#666',
       headerStyle,
     },
   },
