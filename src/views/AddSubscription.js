@@ -7,16 +7,16 @@ import {
   ScrollView,
   Image,
   TextInput,
-  Button,
+  KeyboardAvoidingView,
   TouchableHighlight,
   StyleSheet,
-  Modal,
+  Picker,
 } from 'react-native';
 
 import { NavigationActions } from 'react-navigation';
-// import { SimpleLineIcons } from '@expo/vector-icons';
 import { rgba } from 'polished';
 import shortid from 'shortid';
+import capitalize from 'lodash/capitalize';
 
 import cc from 'currency-codes';
 import getSymbolFromCurrency from 'currency-symbol-map';
@@ -27,7 +27,8 @@ import { addService } from '../actions/addService';
 
 // UI Components
 import GradientButton from '../components/GradientButton';
-import LanguagePicker from '../components/LanguagePicker';
+import PickerModal from '../components/PickerModal';
+import CurrencyPicker from '../components/CurrencyPicker';
 
 const styles = StyleSheet.create({
   container: {
@@ -104,7 +105,8 @@ export class AddSubscription extends Component {
   });
 
   state = {
-    isCurrencyModalOpen: false,
+    isModalOpen: false,
+    modalType: null,
     name: null,
     price: 0,
     description: null,
@@ -112,7 +114,17 @@ export class AddSubscription extends Component {
     subscriptionType: 'monthly',
   };
 
-  handleToggleCurrenyModal = isVisible => this.setState({ isCurrencyModalOpen: isVisible });
+  handleOpenModal = type =>
+    this.setState({
+      isModalOpen: !this.state.isModalOpen,
+      modalType: type,
+    });
+
+  handleCloseModal = () =>
+    this.setState({
+      isModalOpen: false,
+      modalType: null,
+    });
 
   handleAddServiceButtonClick = () => {
     const serviceData = {
@@ -134,8 +146,12 @@ export class AddSubscription extends Component {
     const { serviceName } = this.props.navigation.state.params;
 
     return (
-      <View style={{ flex: 1 }}>
-        <ScrollView style={styles.container}>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={60}>
+        <ScrollView
+          style={styles.container}
+          ref={scrollViewRef => {
+            this.scrollViewRef = scrollViewRef;
+          }}>
           <View style={styles.serviceHeaderContainer}>
             <Image
               style={styles.serviceLogo}
@@ -152,7 +168,7 @@ export class AddSubscription extends Component {
                 {getSymbolFromCurrency(this.state.currencyCode)}
               </Text>
             </View>
-            <Text style={styles.subscriptionType}>{this.state.subscriptionType}</Text>
+            <Text style={styles.subscriptionType}>{capitalize(this.state.subscriptionType)}</Text>
           </View>
 
           <TextInput
@@ -171,39 +187,25 @@ export class AddSubscription extends Component {
 
           <TouchableHighlight
             underlayColor="transparent"
-            onPress={() => this.handleToggleCurrenyModal(!this.state.isCurrencyModalOpen)}>
-            <Text style={styles.inputStyle}>{cc.code(this.state.currencyCode).currency}</Text>
+            onPress={() => this.handleOpenModal('currency')}>
+            <Text style={styles.inputStyle}>
+              {this.state.currencyCode} - {cc.code(this.state.currencyCode).currency}
+            </Text>
+          </TouchableHighlight>
+
+          <TouchableHighlight
+            underlayColor="transparent"
+            onPress={() => this.handleOpenModal('subscriptionType')}>
+            <Text style={styles.inputStyle}>{this.state.subscriptionType}</Text>
           </TouchableHighlight>
 
           <TextInput
             style={styles.inputStyle}
-            defaultValue="monthly"
-            placeholder="Price!"
-            onChangeText={price => this.setState({ price })}
-          />
-
-          {/*
-          <View style={styles.currencyPickerInput}>
-              <Picker
-              itemStyle={{ height: 90, color: rgba('#000', 0.6) }}
-              selectedValue={this.state.subscriptionType}
-              onValueChange={type => this.setState({ subscriptionType: type })}>
-              <Picker.Item label="Weekly" value="weekly" />
-              <Picker.Item label="Monthly" value="monthly" />
-              <Picker.Item label="Yearly" value="yearly" />
-            </Picker>
-            </View>
-          */}
-
-          <TextInput
-            style={styles.inputStyle}
             multiline
+            onFocus={() => this.scrollViewRef.scrollToEnd()}
             placeholder="Description!"
             onChangeText={description => this.setState({ description })}
           />
-
-          <Button onPress={() => console.log(this.state)} title="state" color="#841584" />
-          <Button onPress={() => console.log(this.props)} title="props" color="#841584" />
         </ScrollView>
 
         <TouchableHighlight underlayColor="transparent" onPress={this.handleAddServiceButtonClick}>
@@ -212,57 +214,34 @@ export class AddSubscription extends Component {
           </View>
         </TouchableHighlight>
 
-        <Modal
-          animationType="slide"
+        <PickerModal
+          animationType="fade"
           transparent
-          visible={this.state.isCurrencyModalOpen}
-          onRequestClose={() => this.handleToggleCurrenyModal(!this.state.isCurrencyModalOpen)}>
-          <TouchableHighlight
-            style={{ flex: 1 }}
-            underlayColor="transparent"
-            onPress={() => {
-              this.handleToggleCurrenyModal(!this.state.isCurrencyModalOpen);
-            }}>
-            <View
-              style={{
-                marginTop: 22,
-                flex: 1,
-                backgroundColor: rgba('#000', 0.6),
-                justifyContent: 'flex-end',
-                padding: 10,
-              }}>
-              <View
-                style={{
-                  backgroundColor: '#fff',
-                  paddingHorizontal: 10,
-                  borderRadius: 2,
-                  marginBottom: 10,
-                }}>
-                <LanguagePicker
-                  selectedValue={this.state.currencyCode}
-                  onValueChange={currencyCode => this.setState({ currencyCode })}
-                />
-              </View>
-              <View>
-                <TouchableHighlight
-                  underlayColor="transparent"
-                  onPress={() => {
-                    this.handleToggleCurrenyModal(!this.state.isCurrencyModalOpen);
-                  }}>
-                  <View>
-                    <GradientButton text="Select and Close" />
-                  </View>
-                </TouchableHighlight>
-              </View>
-            </View>
-          </TouchableHighlight>
-        </Modal>
-      </View>
+          visible={this.state.isModalOpen}
+          onRequestClose={this.handleCloseModal}
+          onTransparencyClick={this.handleCloseModal}
+          onCloseClick={this.handleCloseModal}>
+          {this.state.modalType === 'currency' && (
+            <CurrencyPicker
+              selectedValue={this.state.currencyCode}
+              onValueChange={currencyCode => this.setState({ currencyCode })}
+            />
+          )}
+          {this.state.modalType === 'subscriptionType' && (
+            <Picker
+              itemStyle={{ height: 200, color: rgba('#000', 0.6) }}
+              selectedValue={this.state.subscriptionType}
+              onValueChange={subscriptionType => this.setState({ subscriptionType })}>
+              <Picker.Item key="weekly" label="Weekly" value="weekly" />
+              <Picker.Item key="monthly" label="Monthly" value="monthly" />
+              <Picker.Item key="yearly" label="Yearly" value="yearly" />
+            </Picker>
+          )}
+        </PickerModal>
+      </KeyboardAvoidingView>
     );
   }
 }
-
-const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -272,4 +251,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddSubscription);
+export default connect(null, mapDispatchToProps)(AddSubscription);

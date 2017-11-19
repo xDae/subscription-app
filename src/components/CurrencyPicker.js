@@ -38,23 +38,19 @@ const CURRENCIES_TO_AVOID = [
 const currencyArr = cc.codes().filter(currency => !CURRENCIES_TO_AVOID.includes(currency));
 const orderedCurrencies = MAIN_CURRENCIES.concat(currencyArr);
 
-const LanguagePicker = props => {
-  console.log('currencies -> ', currencyArr);
+const CurrencyPicker = props => (
+  <Picker
+    itemStyle={{ height: 200, color: rgba('#000', 0.6) }}
+    selectedValue={props.selectedValue}
+    onValueChange={currencyCode => props.onValueChange(currencyCode)}>
+    {orderedCurrencies.map(currencyCode => (
+      <Picker.Item
+        key={currencyCode}
+        label={`${currencyCode} - ${cc.code(currencyCode).currency}`}
+        value={currencyCode}
+      />
+    ))}
+  </Picker>
+);
 
-  return (
-    <Picker
-      itemStyle={{ height: 260, color: rgba('#000', 0.6) }}
-      selectedValue={props.selectedValue}
-      onValueChange={currencyCode => props.onValueChange(currencyCode)}>
-      {orderedCurrencies.map(currencyCode => (
-        <Picker.Item
-          key={currencyCode}
-          label={`${currencyCode} - ${cc.code(currencyCode).currency}`}
-          value={currencyCode}
-        />
-      ))}
-    </Picker>
-  );
-};
-
-export default LanguagePicker;
+export default CurrencyPicker;
