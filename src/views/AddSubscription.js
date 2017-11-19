@@ -70,6 +70,12 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     borderBottomColor: rgba('#979797', 0.3),
   },
+  inputLabel: {
+    fontFamily: 'montserrat-light',
+    color: rgba('#666', 0.6),
+    fontSize: 12,
+    marginBottom: 6,
+  },
   inputStyle: {
     paddingTop: 16,
     paddingBottom: 16,
@@ -171,6 +177,7 @@ export class AddSubscription extends Component {
             <Text style={styles.subscriptionType}>{capitalize(this.state.subscriptionType)}</Text>
           </View>
 
+          <Text style={styles.inputLabel}>Name</Text>
           <TextInput
             style={styles.inputStyle}
             defaultValue={serviceName}
@@ -179,26 +186,34 @@ export class AddSubscription extends Component {
           />
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <TextInput
-              style={[styles.inputStyle, { flexGrow: 1, marginRight: 10 }]}
-              keyboardType="numeric"
-              placeholder="Price"
-              onChangeText={price => this.setState({ price })}
-            />
+            <View style={{ flexGrow: 1, marginRight: 10 }}>
+              <Text style={styles.inputLabel}>Price</Text>
+              <TextInput
+                style={styles.inputStyle}
+                keyboardType="numeric"
+                placeholder="Price"
+                onChangeText={price => this.setState({ price })}
+              />
+            </View>
 
-            <TouchableHighlight
-              underlayColor="transparent"
-              onPress={() => this.handleOpenModal('currency')}>
-              <Text style={styles.inputStyle}>{this.state.currencyCode}</Text>
-            </TouchableHighlight>
+            <View>
+              <Text style={styles.inputLabel}>Currency</Text>
+              <TouchableHighlight
+                underlayColor="transparent"
+                onPress={() => this.handleOpenModal('currency')}>
+                <Text style={styles.inputStyle}>{this.state.currencyCode}</Text>
+              </TouchableHighlight>
+            </View>
           </View>
 
+          <Text style={styles.inputLabel}>Subscription type</Text>
           <TouchableHighlight
             underlayColor="transparent"
             onPress={() => this.handleOpenModal('subscriptionType')}>
             <Text style={styles.inputStyle}>{capitalize(this.state.subscriptionType)}</Text>
           </TouchableHighlight>
 
+          <Text style={styles.inputLabel}>Description</Text>
           <TextInput
             style={styles.inputStyle}
             multiline
