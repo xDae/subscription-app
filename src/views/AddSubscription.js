@@ -178,25 +178,25 @@ export class AddSubscription extends Component {
             onChangeText={name => this.setState({ name })}
           />
 
-          <TextInput
-            style={styles.inputStyle}
-            keyboardType="numeric"
-            placeholder="Price"
-            onChangeText={price => this.setState({ price })}
-          />
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <TextInput
+              style={[styles.inputStyle, { flexGrow: 1, marginRight: 10 }]}
+              keyboardType="numeric"
+              placeholder="Price"
+              onChangeText={price => this.setState({ price })}
+            />
 
-          <TouchableHighlight
-            underlayColor="transparent"
-            onPress={() => this.handleOpenModal('currency')}>
-            <Text style={styles.inputStyle}>
-              {this.state.currencyCode} - {cc.code(this.state.currencyCode).currency}
-            </Text>
-          </TouchableHighlight>
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={() => this.handleOpenModal('currency')}>
+              <Text style={styles.inputStyle}>{this.state.currencyCode}</Text>
+            </TouchableHighlight>
+          </View>
 
           <TouchableHighlight
             underlayColor="transparent"
             onPress={() => this.handleOpenModal('subscriptionType')}>
-            <Text style={styles.inputStyle}>{this.state.subscriptionType}</Text>
+            <Text style={styles.inputStyle}>{capitalize(this.state.subscriptionType)}</Text>
           </TouchableHighlight>
 
           <TextInput
@@ -243,6 +243,8 @@ export class AddSubscription extends Component {
   }
 }
 
+const mapStateToProps = state => ({});
+
 const mapDispatchToProps = dispatch => {
   return {
     addService: (id, service) => {
@@ -251,4 +253,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(AddSubscription);
+export default connect(mapStateToProps, mapDispatchToProps)(AddSubscription);

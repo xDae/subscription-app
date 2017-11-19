@@ -56,16 +56,19 @@ export class ServiceDetail extends Component {
   }
 }
 
-const mapStateToProps = ({ serviceList }, ownProps) => {
-  const { serviceID } = ownProps.navigation.state.params;
+// const mapStateToProps = ({ serviceList }, ownProps) => {
+//   const { serviceID } = ownProps.navigation.state.params;
 
-  return {
-    serviceData: { id: serviceID, ...serviceList[serviceID] },
-  };
-};
+//   return {
+//     serviceData: { id: serviceID, ...serviceList[serviceID] },
+//   };
+// };
 
-const mapDispatchToProps = dispatch => ({
-  removeService: id => dispatch(removeService(id)),
-});
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     removeService: id => dispatch(removeService(id)),
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ServiceDetail);
+// export default connect(mapStateToProps, mapDispatchToProps)(ServiceDetail);
+export default ServiceDetail;
