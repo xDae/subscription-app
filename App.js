@@ -17,8 +17,7 @@ import AppWithNavigationState from './src/navigators/AppNavigator';
 
 const persistConfig = {
   key: 'root',
-  version: 1,
-  blacklist: ['nav'],
+  blacklist: ['nav', 'serviceList'],
   storage: AsyncStorage,
 };
 

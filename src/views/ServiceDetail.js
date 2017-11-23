@@ -56,11 +56,11 @@ export class ServiceDetail extends Component {
   }
 }
 
-const mapStateToProps = ({ serviceList }, ownProps) => {
+const mapStateToProps = ({ userServices }, ownProps) => {
   const { serviceID } = ownProps.navigation.state.params;
 
   return {
-    serviceData: { id: serviceID, ...serviceList[serviceID] },
+    serviceData: { id: serviceID, ...userServices[serviceID] },
   };
 };
 
