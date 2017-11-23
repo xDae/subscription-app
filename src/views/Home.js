@@ -1,17 +1,17 @@
 // @flow
 
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Text, TouchableHighlight } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableHighlight } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 import { connect } from 'react-redux';
 
 // Views
-import NoSubscriptions from './NoSubscriptions';
-import ServiceCard from '../components/ServiceCard';
+import NoSubscriptions from '../views/NoSubscriptions';
 
 // UI Components
-import GradientButton from '../components/GradientButton';
+import GradientButton from 'Components/GradientButton';
+import ServiceCard from 'Components/ServiceCard';
 
 const styles = StyleSheet.create({
   container: {

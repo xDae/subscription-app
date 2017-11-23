@@ -40,6 +40,9 @@ flow/
 [options]
 module.system=haste
 
+module.system.node.resolve_dirname=node_modules
+module.system.node.resolve_dirname=src
+
 emoji=true
 
 experimental.strict_type_args=true

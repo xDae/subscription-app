@@ -1,13 +1,13 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Modal, Text, View, StyleSheet, FlatList, Image, TouchableHighlight } from 'react-native';
+import { Modal, Text, View, StyleSheet, FlatList, TouchableHighlight } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { rgba } from 'polished';
 
 // UI Components
-import GradientButton from '../components/GradientButton';
-import ServiceBox from '../components/ServiceBox';
+import GradientButton from 'Components/GradientButton';
+import ServiceBox from 'Components/ServiceBox';
 
 const serviceList = [
   {

@@ -18,17 +18,16 @@ import { rgba } from 'polished';
 import shortid from 'shortid';
 import capitalize from 'lodash/capitalize';
 
-import cc from 'currency-codes';
 import getSymbolFromCurrency from 'currency-symbol-map';
 
 import { connect } from 'react-redux';
 
-import { addService } from '../actions/addService';
+import { addService } from 'Actions/addService';
 
 // UI Components
-import GradientButton from '../components/GradientButton';
-import PickerModal from '../components/PickerModal';
-import CurrencyPicker from '../components/CurrencyPicker';
+import GradientButton from 'Components/GradientButton';
+import PickerModal from 'Components/PickerModal';
+import CurrencyPicker from 'Components/CurrencyPicker';
 
 const styles = StyleSheet.create({
   container: {

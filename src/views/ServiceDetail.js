@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
 
 // redux actions
-import { removeService } from '../actions/addService';
+import { removeService } from 'Actions/addService';
 
 const styles = StyleSheet.create({
   container: {

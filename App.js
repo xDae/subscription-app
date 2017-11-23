@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-// import { compose, withHandlers, withProps, withState } from 'recompose';
 
 import { firestore } from './firebase-config';
 
@@ -19,6 +18,7 @@ import AppWithNavigationState from './src/navigators/AppNavigator';
 const persistConfig = {
   key: 'root',
   version: 1,
+  blacklist: ['nav'],
   storage: AsyncStorage,
 };
 
