@@ -153,6 +153,7 @@ export class AddSubscription extends Component {
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={60}>
         <ScrollView
+          keyboardDismissMode="on-drag"
           style={styles.container}
           ref={scrollViewRef => {
             this.scrollViewRef = scrollViewRef;
