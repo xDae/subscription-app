@@ -5,7 +5,6 @@ import {
   Text,
   View,
   ScrollView,
-  Image,
   TextInput,
   KeyboardAvoidingView,
   TouchableHighlight,
@@ -27,6 +26,7 @@ import { addService } from 'Actions/addService';
 import GradientButton from 'Components/GradientButton';
 import PickerModal from 'Components/PickerModal';
 import CurrencyPicker from 'Components/CurrencyPicker';
+import ServiceLogo from 'Components/ServiceLogo';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,11 +37,6 @@ const styles = StyleSheet.create({
   serviceHeaderContainer: {
     alignItems: 'center',
     marginVertical: 30,
-  },
-  serviceLogo: {
-    width: 60,
-    height: 60,
-    marginBottom: 10,
   },
   serviceTitle: {
     color: '#666',
@@ -160,7 +155,7 @@ export class AddSubscription extends Component {
             this.scrollViewRef = scrollViewRef;
           }}>
           <View style={styles.serviceHeaderContainer}>
-            <Image style={styles.serviceLogo} resizeMode="contain" source={{ uri: logo }} />
+            <ServiceLogo style={{ marginBottom: 10 }} url={logo} />
             <Text style={styles.serviceTitle}>{this.state.formData.name || name}</Text>
             <View style={styles.servicePriceContainer}>
               <Text style={styles.servicePrice}>

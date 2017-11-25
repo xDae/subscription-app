@@ -3,6 +3,11 @@
 // import omit from 'lodash/omit';
 
 const serviceArr = {
+  custom: {
+    name: 'Add your custom service',
+    logo:
+      'https://cdn.dribbble.com/assets/dribbble-ball-1000-187399483de9611d2499b0cf6e49be99ed5d1e920c5790e9d930d134bae0c62e.png',
+  },
   1: {
     name: 'Dribbble',
     logo:
@@ -18,7 +23,8 @@ const serviceArr = {
   },
   4: {
     name: 'Netlfix',
-    logo: 'http://tusimagenesde.com/wp-content/uploads/2016/05/netflix-logo-7.png',
+    logo:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Netflix_icon.svg/500px-Netflix_icon.svg.png',
   },
   5: {
     name: 'Sketch',
@@ -32,8 +38,7 @@ const serviceArr = {
   },
   7: {
     name: 'Spotify',
-    logo:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Spotify_logo_with_text.svg/2000px-Spotify_logo_with_text.svg.png',
+    logo: 'https://cdn.pixelprivacy.com/wp-content/uploads/2017/10/spotify-logo.png',
   },
   8: {
     name: 'Apple Music',

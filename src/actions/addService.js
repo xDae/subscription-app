@@ -1,5 +1,7 @@
 // @flow
 
+import { NavigationActions } from 'react-navigation';
+
 export const addService = (id, service) => ({
   type: 'ADD_SERVICE',
   id,
@@ -7,10 +9,17 @@ export const addService = (id, service) => ({
 });
 
 export const removeService = id => {
-  console.log('hola!', id);
+  return dispatch => {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'Home' })],
+    });
 
-  return {
-    type: 'REMOVE_SERVICE',
-    id,
+    dispatch(resetAction);
+
+    dispatch({
+      type: 'REMOVE_SERVICE',
+      id,
+    });
   };
 };

@@ -83,7 +83,7 @@ class ServiceList extends Component {
 
         <TouchableHighlight
           underlayColor="transparent"
-          onPress={() => navigate('AddSubscription', { service: 'Custom' })}>
+          onPress={() => navigate('AddSubscription', { serviceID: 'custom' })}>
           <View>
             <GradientButton
               text="Add Custom Subscription"

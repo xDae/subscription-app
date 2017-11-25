@@ -5,9 +5,9 @@ export const getService = () => {
   // return (dispatch, getState) => {
   //   console.log(getState());
 
-    return {
-      type: 'GET_SERVICE',
-      payload: 'hola',
-    };
+  return {
+    type: 'GET_SERVICE',
+    payload: 'hola',
+  };
   // };
 };

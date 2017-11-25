@@ -49,7 +49,14 @@ class Home extends Component {
             renderItem={({ item }) => (
               <TouchableHighlight
                 underlayColor="transparent"
-                onPress={() => navigate('ServiceDetail', { serviceID: item })}>
+                onPress={() =>
+                  navigate('ServiceDetail', {
+                    userServiceID: item,
+                    serviceID: userServices[item].serviceID,
+                    serviceName:
+                      userServices[item].name || serviceList[userServices[item].serviceID].name,
+                  })
+                }>
                 <View style={{ marginTop: 10 }}>
                   <ServiceCard
                     logoUrl={serviceList[userServices[item].serviceID].logo}
