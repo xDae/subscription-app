@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ServiceCard = ({ logoUrl, text, price, priceType }) => (
+const ServiceCard = ({ logoUrl, text, price, currencySymbol, priceType }) => (
   <View style={styles.container}>
     <Image
       style={styles.logo}
@@ -54,7 +54,7 @@ const ServiceCard = ({ logoUrl, text, price, priceType }) => (
     />
     <Text style={styles.serviceTitle}>{text}</Text>
     <View style={styles.priceContainer}>
-      <Text style={styles.price}>{price}</Text>
+      <Text style={styles.price}>{`${price} ${currencySymbol}`}</Text>
       <Text style={styles.priceType}>{priceType}</Text>
     </View>
   </View>

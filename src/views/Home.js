@@ -3,11 +3,11 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, FlatList, TouchableHighlight } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
-
 import { connect } from 'react-redux';
+import getSymbolFromCurrency from 'currency-symbol-map';
 
 // Views
-import NoSubscriptions from '../views/NoSubscriptions';
+import NoSubscriptions from 'Views/NoSubscriptions';
 
 // UI Components
 import GradientButton from 'Components/GradientButton';
@@ -36,14 +36,15 @@ class Home extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    const { serviceList, userServices } = this.props;
 
     return (
       <View style={styles.container}>
-        {Object.keys(this.props.userServices).length ? (
+        {Object.keys(userServices).length ? (
           <FlatList
             contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 12 }}
             style={{ width: '100%' }}
-            data={Object.keys(this.props.userServices)}
+            data={Object.keys(userServices)}
             keyExtractor={item => item}
             renderItem={({ item }) => (
               <TouchableHighlight
@@ -51,10 +52,11 @@ class Home extends Component {
                 onPress={() => navigate('ServiceDetail', { serviceID: item })}>
                 <View style={{ marginTop: 10 }}>
                   <ServiceCard
-                    logoUrl="https://cdn.dribbble.com/assets/dribbble-ball-1000-187399483de9611d2499b0cf6e49be99ed5d1e920c5790e9d930d134bae0c62e.png"
-                    text={this.props.userServices[item].serviceName}
-                    price={this.props.userServices[item].price}
-                    priceType="monthly"
+                    logoUrl={serviceList[userServices[item].serviceID].logo}
+                    text={userServices[item].name || serviceList[userServices[item].serviceID].name}
+                    price={userServices[item].price}
+                    currencySymbol={getSymbolFromCurrency(userServices[item].currencyCode)}
+                    priceType={userServices[item].subscriptionType}
                   />
                 </View>
               </TouchableHighlight>
@@ -73,8 +75,9 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = ({ userServices }) => {
+const mapStateToProps = ({ serviceList, userServices }) => {
   return {
+    serviceList,
     userServices,
   };
 };

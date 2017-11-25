@@ -72,7 +72,7 @@ class ServiceList extends Component {
           columnWrapperStyle={styles.columnWrapper}
           renderItem={({ item }) => (
             <TouchableHighlight
-              onPress={() => navigate('AddSubscription', { serviceName: item.name })}
+              onPress={() => navigate('AddSubscription', { serviceID: item.id })}
               underlayColor="transparent">
               <View>
                 <ServiceBox name={item.name} logo={item.logo} />

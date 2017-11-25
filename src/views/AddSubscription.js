@@ -14,14 +14,13 @@ import {
 } from 'react-native';
 
 import { NavigationActions } from 'react-navigation';
+import { connect } from 'react-redux';
 import { rgba } from 'polished';
 import shortid from 'shortid';
 import capitalize from 'lodash/capitalize';
-
 import getSymbolFromCurrency from 'currency-symbol-map';
 
-import { connect } from 'react-redux';
-
+// Actions
 import { addService } from 'Actions/addService';
 
 // UI Components
@@ -112,11 +111,13 @@ export class AddSubscription extends Component {
   state = {
     isModalOpen: false,
     modalType: null,
-    name: null,
-    price: 0,
-    description: null,
-    currencyCode: 'EUR',
-    subscriptionType: 'monthly',
+    formData: {
+      name: null,
+      price: 0,
+      description: null,
+      currencyCode: 'EUR',
+      subscriptionType: 'monthly',
+    },
   };
 
   handleOpenModal = type =>
@@ -133,8 +134,8 @@ export class AddSubscription extends Component {
 
   handleAddServiceButtonClick = () => {
     const serviceData = {
-      ...this.state,
-      serviceName: this.props.navigation.state.params.serviceName,
+      ...this.state.formData,
+      serviceID: this.props.navigation.state.params.serviceID,
     };
 
     const id = shortid.generate();
@@ -148,7 +149,7 @@ export class AddSubscription extends Component {
   };
 
   render() {
-    const { serviceName } = this.props.navigation.state.params;
+    const { name, logo } = this.props.serviceData;
 
     return (
       <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={60}>
@@ -159,30 +160,33 @@ export class AddSubscription extends Component {
             this.scrollViewRef = scrollViewRef;
           }}>
           <View style={styles.serviceHeaderContainer}>
-            <Image
-              style={styles.serviceLogo}
-              resizeMode="contain"
-              source={{
-                uri:
-                  'https://cdn.dribbble.com/assets/dribbble-ball-1000-187399483de9611d2499b0cf6e49be99ed5d1e920c5790e9d930d134bae0c62e.png',
-              }}
-            />
-            <Text style={styles.serviceTitle}>{this.state.name || serviceName}</Text>
+            <Image style={styles.serviceLogo} resizeMode="contain" source={{ uri: logo }} />
+            <Text style={styles.serviceTitle}>{this.state.formData.name || name}</Text>
             <View style={styles.servicePriceContainer}>
               <Text style={styles.servicePrice}>
-                {this.state.price || '0.00'}
-                {getSymbolFromCurrency(this.state.currencyCode)}
+                {this.state.formData.price || '0.00'}
+                {getSymbolFromCurrency(this.state.formData.currencyCode)}
               </Text>
             </View>
-            <Text style={styles.subscriptionType}>{capitalize(this.state.subscriptionType)}</Text>
+            <Text style={styles.subscriptionType}>
+              {capitalize(this.state.formData.subscriptionType)}
+            </Text>
           </View>
 
           <Text style={styles.inputLabel}>Name</Text>
           <TextInput
             style={styles.inputStyle}
-            defaultValue={serviceName}
+            defaultValue={name}
             placeholder="Name"
-            onChangeText={name => this.setState({ name })}
+            onChangeText={name =>
+              this.setState({
+                ...this.state,
+                formData: {
+                  ...this.state.formData,
+                  name,
+                },
+              })
+            }
           />
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -192,7 +196,15 @@ export class AddSubscription extends Component {
                 style={styles.inputStyle}
                 keyboardType="numeric"
                 placeholder="Price"
-                onChangeText={price => this.setState({ price })}
+                onChangeText={price =>
+                  this.setState({
+                    ...this.state,
+                    formData: {
+                      ...this.state.formData,
+                      price,
+                    },
+                  })
+                }
               />
             </View>
 
@@ -201,7 +213,7 @@ export class AddSubscription extends Component {
               <TouchableHighlight
                 underlayColor="transparent"
                 onPress={() => this.handleOpenModal('currency')}>
-                <Text style={styles.inputStyle}>{this.state.currencyCode}</Text>
+                <Text style={styles.inputStyle}>{this.state.formData.currencyCode}</Text>
               </TouchableHighlight>
             </View>
           </View>
@@ -210,7 +222,9 @@ export class AddSubscription extends Component {
           <TouchableHighlight
             underlayColor="transparent"
             onPress={() => this.handleOpenModal('subscriptionType')}>
-            <Text style={styles.inputStyle}>{capitalize(this.state.subscriptionType)}</Text>
+            <Text style={styles.inputStyle}>
+              {capitalize(this.state.formData.subscriptionType)}
+            </Text>
           </TouchableHighlight>
 
           <Text style={styles.inputLabel}>Description</Text>
@@ -219,7 +233,15 @@ export class AddSubscription extends Component {
             multiline
             onFocus={() => this.scrollViewRef.scrollToEnd()}
             placeholder="Description!"
-            onChangeText={description => this.setState({ description })}
+            onChangeText={description =>
+              this.setState({
+                ...this.state,
+                formData: {
+                  ...this.state.formData,
+                  description,
+                },
+              })
+            }
           />
         </ScrollView>
 
@@ -238,15 +260,31 @@ export class AddSubscription extends Component {
           onCloseClick={this.handleCloseModal}>
           {this.state.modalType === 'currency' && (
             <CurrencyPicker
-              selectedValue={this.state.currencyCode}
-              onValueChange={currencyCode => this.setState({ currencyCode })}
+              selectedValue={this.state.formData.currencyCode}
+              onValueChange={currencyCode =>
+                this.setState({
+                  ...this.state,
+                  formData: {
+                    ...this.state.formData,
+                    currencyCode,
+                  },
+                })
+              }
             />
           )}
           {this.state.modalType === 'subscriptionType' && (
             <Picker
               itemStyle={{ height: 200, color: rgba('#000', 0.6) }}
-              selectedValue={this.state.subscriptionType}
-              onValueChange={subscriptionType => this.setState({ subscriptionType })}>
+              selectedValue={this.state.formData.subscriptionType}
+              onValueChange={subscriptionType =>
+                this.setState({
+                  ...this.state,
+                  formData: {
+                    ...this.state.formData,
+                    subscriptionType,
+                  },
+                })
+              }>
               <Picker.Item key="weekly" label="Weekly" value="weekly" />
               <Picker.Item key="monthly" label="Monthly" value="monthly" />
               <Picker.Item key="yearly" label="Yearly" value="yearly" />
@@ -258,7 +296,13 @@ export class AddSubscription extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = ({ serviceList }, ownProps) => {
+  const { serviceID } = ownProps.navigation.state.params;
+
+  return {
+    serviceData: { id: serviceID, ...serviceList[serviceID] },
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
