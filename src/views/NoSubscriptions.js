@@ -32,7 +32,7 @@ class NoSubscriptions extends Component {
         <Text style={{ fontSize: 40, marginBottom: 10 }}>😞</Text>
         <Text
           style={{
-            // fontFamily: 'montserrat-regular',
+            fontFamily: 'montserrat-regular',
             fontSize: 18,
             marginBottom: 16,
           }}>
@@ -40,7 +40,7 @@ class NoSubscriptions extends Component {
         </Text>
         <Text
           style={{
-            // fontFamily: 'montserrat-light',
+            fontFamily: 'montserrat-light',
             fontSize: 12,
             color: '#333333',
             opacity: 0.7,

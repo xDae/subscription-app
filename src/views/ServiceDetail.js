@@ -1,8 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
-import { Text, View, Button, TouchableHighlight, StyleSheet, Image } from 'react-native';
-// import { NavigationActions } from 'react-navigation';
+import { Text, View, Button, TouchableHighlight, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import capitalize from 'lodash/capitalize';
@@ -76,8 +75,10 @@ export class ServiceDetail extends Component {
             <Text style={styles.serviceTitle}>{serviceName}</Text>
 
             <View style={styles.servicePriceContainer}>
-              <Text style={styles.price}>{`${this.props.serviceDetails.price ||
-                ''} ${getSymbolFromCurrency(this.props.serviceDetails.currencyCode)}`}</Text>
+              <Text style={styles.price}>
+                {this.props.serviceDetails.price}
+                {getSymbolFromCurrency(this.props.serviceDetails.currencyCode)}
+              </Text>
             </View>
             <Text style={styles.subscriptionType}>
               {capitalize(this.props.serviceDetails.subscriptionType)}
@@ -86,7 +87,7 @@ export class ServiceDetail extends Component {
             <Text>{this.props.serviceDetails.description || ''}</Text>
           </View>
         )}
-        <Button onPress={() => this.removeItem(userServiceID)} title="remove" />
+        <Button onPress={() => this.removeItem(userServiceID)} title="❌ remove" />
       </View>
     );
   }

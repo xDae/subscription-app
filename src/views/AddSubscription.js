@@ -13,7 +13,9 @@ import {
 } from 'react-native';
 
 import { NavigationActions } from 'react-navigation';
+// import { compose } from 'redux';
 import { connect } from 'react-redux';
+// import { withFormik } from 'formik';
 import { rgba } from 'polished';
 import shortid from 'shortid';
 import capitalize from 'lodash/capitalize';
@@ -173,6 +175,7 @@ export class AddSubscription extends Component {
             style={styles.inputStyle}
             defaultValue={name}
             placeholder="Name"
+            returnKeyType="done"
             onChangeText={name =>
               this.setState({
                 ...this.state,
@@ -191,6 +194,7 @@ export class AddSubscription extends Component {
                 style={styles.inputStyle}
                 keyboardType="numeric"
                 placeholder="Price"
+                returnKeyType="done"
                 onChangeText={price =>
                   this.setState({
                     ...this.state,
