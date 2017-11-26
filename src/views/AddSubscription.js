@@ -10,7 +10,9 @@ import {
   TouchableHighlight,
   StyleSheet,
   Picker,
+  Platform,
 } from 'react-native';
+import { Constants } from 'expo';
 
 import { NavigationActions } from 'react-navigation';
 // import { compose } from 'redux';
@@ -73,15 +75,14 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   fakeInput: {
-    height: 50,
+    height: Platform.OS === 'ios' ? null : 50,
+    paddingVertical: Platform.OS === 'ios' ? 16 : null,
     justifyContent: 'center',
     paddingHorizontal: 24,
     borderWidth: 1,
     borderColor: rgba('#979797', 0.2),
     borderRadius: 2,
     marginBottom: 16,
-    // paddingTop: 16,
-    // paddingBottom: 16,
   },
   fakeInputText: {
     fontFamily: 'montserrat-regular',
@@ -89,9 +90,9 @@ const styles = StyleSheet.create({
     color: rgba('#000', 0.6),
   },
   inputStyle: {
-    height: 50,
-    // paddingTop: 16,
-    // paddingBottom: 16,
+    height: Platform.OS === 'ios' ? null : 50,
+    paddingTop: Platform.OS === 'ios' ? 16 : null,
+    paddingBottom: Platform.OS === 'ios' ? 16 : null,
     paddingHorizontal: 24,
     borderWidth: 1,
     borderColor: rgba('#979797', 0.2),
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
 
 export class AddSubscription extends Component {
   static navigationOptions = ({ navigation }) => ({
-    // title: navigation.state.params.serviceName,
+    // title: `Adding ${navigation.state.params.serviceName}`,
     headerStyle: {
       backgroundColor: '#fff',
       borderBottomWidth: 1,

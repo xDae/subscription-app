@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, View, TouchableHighlight, StyleSheet, Animated } from 'react-native';
+import { Platform } from 'react-native';
+import { Constants } from 'expo';
 
 import { rgba } from 'polished';
 
@@ -50,6 +52,7 @@ export class PickerModal extends Component {
 const styles = StyleSheet.create({
   touchable: { flex: 1 },
   transparentWrapper: {
+    marginTop: Platform.OS === 'ios' ? Constants.statusBarHeight : 0,
     flex: 1,
     backgroundColor: rgba('#000', 0.6),
     justifyContent: 'flex-end',
