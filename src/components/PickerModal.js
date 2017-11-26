@@ -12,11 +12,14 @@ export class PickerModal extends Component {
   }
 
   componentWillReceiveProps = nextProps => {
-    this.springValue.setValue(100);
-    Animated.spring(this.springValue, {
-      toValue: 0,
-      friction: 5,
-    }).start();
+    // make the animatin only the first time, avoiding animation updating the picker
+    if (nextProps.visible !== this.props.visible) {
+      this.springValue.setValue(100);
+      Animated.spring(this.springValue, {
+        toValue: 0,
+        friction: 5,
+      }).start();
+    }
   };
 
   render() {
