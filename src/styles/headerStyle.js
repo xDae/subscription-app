@@ -7,5 +7,7 @@ export default {
   borderBottomWidth: 1,
   borderBottomColor: rgba('#b2b2b2', 0.2),
   paddingRight: 16,
-  paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight,
+  // paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight,
+  height: Platform.OS === 'ios' ? 64 : 56 + Constants.statusBarHeight,
+  paddingTop: Platform.OS === 'ios' ? 20 : Constants.statusBarHeight,
 };

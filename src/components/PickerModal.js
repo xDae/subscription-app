@@ -50,17 +50,18 @@ export class PickerModal extends Component {
 const styles = StyleSheet.create({
   touchable: { flex: 1 },
   transparentWrapper: {
-    marginTop: 22,
     flex: 1,
     backgroundColor: rgba('#000', 0.6),
     justifyContent: 'flex-end',
     padding: 10,
+    zIndex: 0,
   },
   childrenWrapper: {
     backgroundColor: '#fff',
     paddingHorizontal: 10,
     borderRadius: 2,
     marginBottom: 10,
+    zIndex: 2,
   },
 });
 

@@ -29,6 +29,7 @@ import GradientButton from 'Components/GradientButton';
 import PickerModal from 'Components/PickerModal';
 import CurrencyPicker from 'Components/CurrencyPicker';
 import ServiceLogo from 'Components/ServiceLogo';
+import Input from 'Components/Input';
 
 const styles = StyleSheet.create({
   container: {
@@ -71,9 +72,26 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginBottom: 6,
   },
+  fakeInput: {
+    height: 50,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+    borderWidth: 1,
+    borderColor: rgba('#979797', 0.2),
+    borderRadius: 2,
+    marginBottom: 16,
+    // paddingTop: 16,
+    // paddingBottom: 16,
+  },
+  fakeInputText: {
+    fontFamily: 'montserrat-regular',
+    fontSize: 14,
+    color: rgba('#000', 0.6),
+  },
   inputStyle: {
-    paddingTop: 16,
-    paddingBottom: 16,
+    height: 50,
+    // paddingTop: 16,
+    // paddingBottom: 16,
     paddingHorizontal: 24,
     borderWidth: 1,
     borderColor: rgba('#979797', 0.2),
@@ -176,6 +194,7 @@ export class AddSubscription extends Component {
             defaultValue={name}
             placeholder="Name"
             returnKeyType="done"
+            underlineColorAndroid="transparent"
             onChangeText={name =>
               this.setState({
                 ...this.state,
@@ -212,7 +231,9 @@ export class AddSubscription extends Component {
               <TouchableHighlight
                 underlayColor="transparent"
                 onPress={() => this.handleOpenModal('currency')}>
-                <Text style={styles.inputStyle}>{this.state.formData.currencyCode}</Text>
+                <View style={styles.fakeInput}>
+                  <Text style={styles.fakeInputText}>{this.state.formData.currencyCode}</Text>
+                </View>
               </TouchableHighlight>
             </View>
           </View>
@@ -221,9 +242,11 @@ export class AddSubscription extends Component {
           <TouchableHighlight
             underlayColor="transparent"
             onPress={() => this.handleOpenModal('subscriptionType')}>
-            <Text style={styles.inputStyle}>
-              {capitalize(this.state.formData.subscriptionType)}
-            </Text>
+            <View style={styles.fakeInput}>
+              <Text style={styles.fakeInputText}>
+                {capitalize(this.state.formData.subscriptionType)}
+              </Text>
+            </View>
           </TouchableHighlight>
 
           <Text style={styles.inputLabel}>Description</Text>
@@ -231,7 +254,8 @@ export class AddSubscription extends Component {
             style={styles.inputStyle}
             multiline
             onFocus={() => this.scrollViewRef.scrollToEnd()}
-            placeholder="Description!"
+            placeholder="Description"
+            underlineColorAndroid="transparent"
             onChangeText={description =>
               this.setState({
                 ...this.state,
