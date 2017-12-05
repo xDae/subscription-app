@@ -5,27 +5,33 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 
-import Home from '../views/Home';
-import Settings from '../views/Settings';
-import ServiceList from '../views/ServiceList';
-import AddSubscription from '../views/AddSubscription';
-import ServiceDetail from '../views/ServiceDetail';
+import Home from 'Views/Home';
+import Settings from 'Views/Settings';
+import ServiceList from 'Views/ServiceList';
+import AddSubscription from 'Views/AddSubscription';
+import EditSubscription from 'Views/EditSubscription';
+import ServiceDetail from 'Views/ServiceDetail';
 
-import headerStyle from '../styles/headerStyle';
+import headerStyle from 'Styles/headerStyle';
+
+const navigationOptions = {
+  headerTintColor: '#666',
+  headerBackTitle: null,
+  headerStyle,
+};
 
 export const AppNavigator = StackNavigator({
   Home: {
     screen: Home,
     navigationOptions: {
-      headerTitle: 'My Subscriptions',
-      headerTintColor: '#666',
-      headerStyle,
+      title: 'My Subscriptions',
+      ...navigationOptions,
     },
   },
   Settings: {
     screen: Settings,
     navigationOptions: {
-      headerTitle: 'Settings',
+      title: 'Settings',
       headerStyle,
     },
   },
@@ -33,28 +39,20 @@ export const AppNavigator = StackNavigator({
     screen: ServiceList,
     navigationOptions: {
       title: 'Add new subscription',
-      // headerRight: <SimpleLineIcons name="equalizer" size={20} />,
-      // headerBackTitle: null,
-      headerTintColor: '#666',
-      headerStyle,
-      // headerBackTitleStyle: {
-      //   color: '#666',
-      // },
+      ...navigationOptions,
     },
   },
   AddSubscription: {
     screen: AddSubscription,
-
-    navigationOptions: {
-      headerTintColor: '#666',
-      headerStyle,
-    },
+    navigationOptions,
+  },
+  EditSubscription: {
+    screen: EditSubscription,
+    navigationOptions,
   },
   ServiceDetail: {
     screen: ServiceDetail,
-    navigationOptions: {
-      headerStyle,
-    },
+    navigationOptions,
   },
 });
 

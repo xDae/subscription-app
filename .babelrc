@@ -15,7 +15,7 @@
           "Views": "./src/views",
           "Components": "./src/components",
           "Reducers": "./src/reducers",
-          "Actions": "./src/actions",
+          "actions": "./src/actions",
           "Styles": "./src/styles"
         }
       }

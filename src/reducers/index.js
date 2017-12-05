@@ -4,14 +4,14 @@ import { combineReducers } from 'redux';
 
 import nav from './nav';
 import auth from './auth';
-import serviceList from './serviceList';
-import userServices from './userServices';
+import subscriptions from './subscriptions';
+import services from './services';
 
 const AppReducer = combineReducers({
   nav,
   auth,
-  serviceList,
-  userServices,
+  services,
+  subscriptions,
 });
 
 export default AppReducer;

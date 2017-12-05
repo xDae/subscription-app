@@ -1,5 +1,6 @@
 {
   "path-intellisense.mappings": {
-    "~": "${workspaceRoot}/src"
+    "~": "${workspaceRoot}/src",
+    "actions": "${workspaceRoot}/src/actions"
   }
 }

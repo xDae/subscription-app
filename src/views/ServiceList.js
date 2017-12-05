@@ -37,7 +37,7 @@ class ServiceList extends Component {
         <TouchableHighlight
           onPress={() => params.toggleModalVisible(!params.modalVisible)}
           underlayColor="transparent">
-          <SimpleLineIcons name="equalizer" size={20} />
+          <SimpleLineIcons name="equalizer" size={22} color="#666" />
         </TouchableHighlight>
       ),
     };
@@ -132,10 +132,10 @@ class ServiceList extends Component {
   }
 }
 
-const mapStateToProps = ({ serviceList }) => ({
-  serviceList: Object.keys(serviceList).map(serviceID => ({
+const mapStateToProps = ({ services }) => ({
+  serviceList: Object.keys(services).map(serviceID => ({
     id: serviceID,
-    ...serviceList[serviceID],
+    ...services[serviceID],
   })),
 });
 

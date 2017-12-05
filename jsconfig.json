@@ -4,9 +4,8 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "paths": {
-      "~/*": [
-        "src/*"
-      ]
+      "~/*": ["src/*"],
+      "actions/*": ["src/actions/*"]
     }
   },
   "exclude": [

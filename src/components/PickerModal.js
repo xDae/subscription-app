@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, View, TouchableHighlight, StyleSheet, Animated } from 'react-native';
-import { Platform } from 'react-native';
+import { Modal, View, TouchableHighlight, StyleSheet, Animated, Platform } from 'react-native';
 import { Constants } from 'expo';
-
 import { rgba } from 'polished';
 
+// UI components
 import GradientButton from './GradientButton';
 
 export class PickerModal extends Component {
@@ -14,7 +13,7 @@ export class PickerModal extends Component {
   }
 
   componentWillReceiveProps = nextProps => {
-    // make the animatin only the first time, avoiding animation updating the picker
+    // make the animatin only the first time, avoiding animation on picker update
     if (nextProps.visible !== this.props.visible) {
       this.springValue.setValue(100);
       Animated.spring(this.springValue, {
@@ -26,7 +25,7 @@ export class PickerModal extends Component {
 
   render() {
     return (
-      <Modal {...this.props} onShow={this.spring}>
+      <Modal {...this.props}>
         <TouchableHighlight
           style={styles.touchable}
           underlayColor="transparent"
@@ -52,7 +51,7 @@ export class PickerModal extends Component {
 const styles = StyleSheet.create({
   touchable: { flex: 1 },
   transparentWrapper: {
-    marginTop: Platform.OS === 'ios' ? Constants.statusBarHeight : 0,
+    marginTop: Platform.OS === 'ios' ? Constants.statusBarHeight : null,
     flex: 1,
     backgroundColor: rgba('#000', 0.6),
     justifyContent: 'flex-end',

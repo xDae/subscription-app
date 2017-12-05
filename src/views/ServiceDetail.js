@@ -3,13 +3,13 @@
 import React, { Component } from 'react';
 import { Text, View, Button, TouchableHighlight, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { SimpleLineIcons } from '@expo/vector-icons';
+// import { SimpleLineIcons } from '@expo/vector-icons';
 import capitalize from 'lodash/capitalize';
 import getSymbolFromCurrency from 'currency-symbol-map';
 import { rgba } from 'polished';
 
 // redux actions
-import { removeService } from 'Actions/addService';
+import { removeSubscription } from 'actions/subscriptions';
 
 // UI components
 import ServiceLogo from 'Components/ServiceLogo';
@@ -55,8 +55,16 @@ export class ServiceDetail extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.serviceName,
     headerRight: (
-      <TouchableHighlight onPress={() => navigation.navigate('Home')} underlayColor="transparent">
-        <SimpleLineIcons name="options" size={20} />
+      <TouchableHighlight
+        onPress={() =>
+          navigation.navigate('EditSubscription', {
+            subscriptionID: navigation.state.params.subscriptionID,
+            serviceID: navigation.state.params.serviceID,
+          })
+        }
+        underlayColor="transparent">
+        <Text>Edit</Text>
+        {/*<SimpleLineIcons name="options" size={20} />*/}
       </TouchableHighlight>
     ),
   });
@@ -93,19 +101,17 @@ export class ServiceDetail extends Component {
   }
 }
 
-const mapStateToProps = ({ serviceList, userServices }, ownProps) => {
-  const { userServiceID, serviceID } = ownProps.navigation.state.params;
+const mapStateToProps = ({ services, subscriptions }, ownProps) => {
+  const { subscriptionID, serviceID } = ownProps.navigation.state.params;
 
   return {
-    serviceDetails: userServices[userServiceID],
-    serviceData: serviceList[serviceID],
+    serviceDetails: subscriptions[subscriptionID],
+    serviceData: services[serviceID],
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    removeService: id => dispatch(removeService(id)),
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  removeService: id => dispatch(removeSubscription(id)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ServiceDetail);

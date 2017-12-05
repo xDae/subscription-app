@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, FlatList, TouchableHighlight } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
-import { connect } from 'react-redux';
 import getSymbolFromCurrency from 'currency-symbol-map';
 
 // Views
@@ -36,34 +35,34 @@ class Home extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { serviceList, userServices } = this.props;
+    const { services, subscriptions } = this.props;
 
     return (
       <View style={styles.container}>
-        {Object.keys(userServices).length ? (
+        {Object.keys(subscriptions).length ? (
           <FlatList
             contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 12 }}
             style={{ width: '100%' }}
-            data={Object.keys(userServices)}
+            data={Object.keys(subscriptions)}
             keyExtractor={item => item}
             renderItem={({ item }) => (
               <TouchableHighlight
                 underlayColor="transparent"
                 onPress={() =>
                   navigate('ServiceDetail', {
-                    userServiceID: item,
-                    serviceID: userServices[item].serviceID,
+                    subscriptionID: item,
+                    serviceID: subscriptions[item].serviceID,
                     serviceName:
-                      userServices[item].name || serviceList[userServices[item].serviceID].name,
+                      subscriptions[item].name || services[subscriptions[item].serviceID].name,
                   })
                 }>
                 <View style={{ marginTop: 10 }}>
                   <ServiceCard
-                    logoUrl={serviceList[userServices[item].serviceID].logo}
-                    text={userServices[item].name || serviceList[userServices[item].serviceID].name}
-                    price={userServices[item].price}
-                    currencySymbol={getSymbolFromCurrency(userServices[item].currencyCode)}
-                    priceType={userServices[item].subscriptionType}
+                    // logoUrl={services[subscriptions[item].serviceID].logo}
+                    text={subscriptions[item].name || services[subscriptions[item].serviceID].name}
+                    price={subscriptions[item].price}
+                    currencySymbol={getSymbolFromCurrency(subscriptions[item].currencyCode)}
+                    priceType={subscriptions[item].subscriptionType}
                   />
                 </View>
               </TouchableHighlight>
@@ -82,19 +81,4 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = ({ serviceList, userServices }) => {
-  return {
-    serviceList,
-    userServices,
-  };
-};
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     removeService: id => {
-//       dispatch(removeService(id));
-//     },
-//   };
-// };
-
-export default connect(mapStateToProps)(Home);
+export default Home;

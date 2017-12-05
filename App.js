@@ -19,6 +19,8 @@ const persistConfig = {
   key: 'root',
   blacklist: ['nav', 'serviceList'],
   storage: AsyncStorage,
+  version: 1,
+  debug: process.env.NODE_ENV === 'development',
 };
 
 const finalReducer = persistReducer(persistConfig, AppReducer);

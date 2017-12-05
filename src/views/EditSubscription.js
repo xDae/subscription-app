@@ -11,19 +11,19 @@ import {
   StyleSheet,
   Picker,
   Platform,
+  Alert,
+  Button,
 } from 'react-native';
 import { SimpleLineIcons } from '@expo/vector-icons';
-import { NavigationActions } from 'react-navigation';
 // import { compose } from 'redux';
 import { connect } from 'react-redux';
 // import { withFormik } from 'formik';
 import { rgba } from 'polished';
-import shortid from 'shortid';
 import capitalize from 'lodash/capitalize';
 import getSymbolFromCurrency from 'currency-symbol-map';
 
-// Actions
-import { addSubscription } from 'actions/subscriptions';
+// Redux actions
+import { editSubscription, removeSubscription } from 'actions/subscriptions';
 
 // UI Components
 import GradientButton from 'Components/GradientButton';
@@ -111,27 +111,45 @@ const styles = StyleSheet.create({
   },
 });
 
-export class AddSubscription extends Component {
+export class EditSubscription extends Component {
   static navigationOptions = ({ navigation }) => ({
-  // title: `Adding ${navigation.state.params.serviceName}`,
-  // headerStyle: {
-  //   backgroundColor: '#fff',
-  //   borderBottomWidth: 1,
-  //   borderBottomColor: rgba('#B2B2B2', 0.2),
-  //   paddingRight: 16,
-  // },
-    headerRight: <SimpleLineIcons name="info" size={22} color="#666" />,
+    // title: `Adding ${navigation.state.params.serviceName}`,
+    // headerStyle: {
+    //   backgroundColor: '#fff',
+    //   borderBottomWidth: 1,
+    //   borderBottomColor: rgba('#B2B2B2', 0.2),
+    //   paddingRight: 16,
+    // },
+    headerRight: <SimpleLineIcons name="trash" color="red" size={22} />,
   });
+
+  removeItem = itemID => {
+    console.log(itemID);
+    return this.props.removeService(itemID);
+  };
+
+  alert = () => {
+    Alert.alert(
+      'Delete subscription',
+      `Are you sure you want to delete ${this.props.subscriptionData.name ||
+        this.props.serviceData.name} subscription?`,
+      [
+        { text: 'Yes, do it!', onPress: () => this.removeItem(this.props.subscriptionData.id) },
+        { text: 'Ops, not!', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+      ],
+      { cancelable: true }
+    );
+  };
 
   state = {
     isModalOpen: false,
     modalType: null,
     formData: {
-      name: null,
-      price: 0,
-      description: null,
-      currencyCode: 'EUR',
-      subscriptionType: 'monthly',
+      name: this.props.subscriptionData.name,
+      price: this.props.subscriptionData.price,
+      description: this.props.subscriptionData.description,
+      currencyCode: this.props.subscriptionData.currencyCode,
+      subscriptionType: this.props.subscriptionData.subscriptionType,
     },
   };
 
@@ -148,19 +166,11 @@ export class AddSubscription extends Component {
     });
 
   handleAddServiceButtonClick = () => {
-    const serviceData = {
-      ...this.state.formData,
-      serviceID: this.props.navigation.state.params.serviceID,
-    };
+    const form = { ...this.state.formData };
+    const id = this.props.subscriptionData.id;
 
-    const id = shortid.generate();
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Home' })],
-    });
-
-    this.props.addService(id, serviceData);
-    this.props.navigation.dispatch(resetAction);
+    this.props.editService(id, form);
+    this.props.navigation.goBack();
   };
 
   render() {
@@ -186,25 +196,13 @@ export class AddSubscription extends Component {
             <Text style={styles.subscriptionType}>
               {capitalize(this.state.formData.subscriptionType)}
             </Text>
-
-            {this.props.serviceData.description && (
-              <Text
-                style={{
-                  marginVertical: 20,
-                  color: rgba('#000', 0.6),
-                  fontFamily: 'montserrat-light',
-                  textAlign: 'justify',
-                  lineHeight: 20,
-                }}>
-                {this.props.serviceData.description}
-              </Text>
-            )}
           </View>
 
           <Text style={styles.inputLabel}>Name</Text>
           <TextInput
             style={styles.inputStyle}
-            defaultValue={name}
+            defaultValue={this.state.formData.name || name}
+            value={this.state.formData.name}
             placeholder="Name"
             returnKeyType="done"
             underlineColorAndroid="transparent"
@@ -224,6 +222,7 @@ export class AddSubscription extends Component {
               <Text style={styles.inputLabel}>Price</Text>
               <TextInput
                 style={styles.inputStyle}
+                value={this.state.formData.price}
                 keyboardType="numeric"
                 placeholder="Price"
                 returnKeyType="done"
@@ -281,9 +280,11 @@ export class AddSubscription extends Component {
           />
         </ScrollView>
 
+        <Button onPress={this.alert} title="❌ remove" />
+
         <TouchableHighlight underlayColor="transparent" onPress={this.handleAddServiceButtonClick}>
           <View>
-            <GradientButton text="Add Subscription" />
+            <GradientButton text="Edit Subscription" />
           </View>
         </TouchableHighlight>
 
@@ -332,20 +333,18 @@ export class AddSubscription extends Component {
   }
 }
 
-const mapStateToProps = ({ services }, ownProps) => {
-  const { serviceID } = ownProps.navigation.state.params;
+const mapStateToProps = ({ services, subscriptions }, ownProps) => {
+  const { subscriptionID, serviceID } = ownProps.navigation.state.params;
 
   return {
-    serviceData: { id: serviceID, ...services[serviceID] },
+    serviceData: services[serviceID],
+    subscriptionData: { id: subscriptionID, ...subscriptions[subscriptionID] },
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addService: (id, service) => {
-      dispatch(addSubscription(id, service));
-    },
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  editService: (id, serviceData) => dispatch(editSubscription(id, serviceData)),
+  removeService: id => dispatch(removeSubscription(id)),
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddSubscription);
+export default connect(mapStateToProps, mapDispatchToProps)(EditSubscription);

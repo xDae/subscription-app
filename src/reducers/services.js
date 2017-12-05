@@ -12,6 +12,8 @@ const serviceArr = {
     name: 'Dribbble',
     logo:
       'https://cdn.dribbble.com/assets/dribbble-ball-1000-187399483de9611d2499b0cf6e49be99ed5d1e920c5790e9d930d134bae0c62e.png',
+    description:
+      'What are you working on? Dribbble is a community of designers answering that question each day. Web designers, graphic designers, illustrators, icon artists, typographers, logo designers, and other creative types share small screenshots (shots) that show their work, process, and current projects.',
   },
   2: {
     name: 'Slack',
@@ -22,9 +24,11 @@ const serviceArr = {
     logo: 'https://icon-icons.com/icons2/836/PNG/512/Invision_icon-icons.com_66743.png',
   },
   4: {
-    name: 'Netlfix',
+    name: 'Netflix',
     logo:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Netflix_icon.svg/500px-Netflix_icon.svg.png',
+    description:
+      "Netflix is the world's leading internet entertainment service with over 109 million members in over 190 countries enjoying more than 125 million hours of TV shows and movies per day, including original series, documentaries and feature films. Members can watch as much as they want, anytime, anywhere, on nearly any internet-connected screen. Members can play, pause and resume watching, all without commercials or commitments.",
   },
   5: {
     name: 'Sketch',
@@ -127,17 +131,11 @@ const serviceArr = {
   },
 };
 
-const serviceList = (state = serviceArr, { type, id, payload }) => {
+const services = (state = serviceArr, { type, id, payload }) => {
   switch (type) {
-    // case 'ADD_SERVICE':
-    //   return { ...state, [id]: payload };
-    // case 'EDIT_SERVICE':
-    //   return { ...state, payload };
-    // case 'REMOVE_SERVICE':
-    //   return omit(state, id);
     default:
       return state;
   }
 };
 
-export default serviceList;
+export default services;
